@@ -12,6 +12,8 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v4.1.1
+          with:
+            token: ${{ secrets.GH_PAT }}
 
         - name: Setup Node.js
           uses: actions/setup-node@v4
@@ -32,6 +34,8 @@ jobs:
             git add package.json
             git commit -m "Release version ${{ steps.version.outputs.version }} [skip ci]"
             git push
+          env:
+            GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   create-git-tag:
     needs:
@@ -40,6 +44,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       - name: Create git tag
         run: |
@@ -48,6 +54,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git tag ${{needs.set-version.outputs.version}}
           git push --no-verify origin ${{needs.set-version.outputs.version}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   publish-npm-package:
     needs:
@@ -86,7 +94,7 @@ jobs:
         id: release_changelog
         uses: jaywcjlove/changelog-generator@v1.9.6
         with:
-            token: ${{ secrets.GITHUB_TOKEN }}
+            token: ${{ secrets.GH_PAT }}
             show-emoji: "false"
 
       - name: Create GitHub release
@@ -95,3 +103,4 @@ jobs:
             tag_name: ${{needs.set-version.outputs.version}}
             body: ${{steps.release_changelog.outputs.changelog}}
             generate_release_notes: true
+            token: ${{ secrets.GH_PAT }}
