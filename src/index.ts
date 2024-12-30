@@ -1,4 +1,4 @@
-import type { Plugin } from '@docusaurus/types';
+import type { LoadContext, Plugin } from '@docusaurus/types';
 import type { PluginOptions } from './options';
 import { extractRoutesMetadata } from './parseDocuments';
 import { generateLLMsTxt, generateFullLLMsTxt } from './createLLMsTxtFiles';
@@ -41,6 +41,7 @@ async function writeLLMsFullTxtFile(llmsFullTxt: string, outDir: string) {
 }
 
 export default function pluginLLMsTxt(
+  context: LoadContext,
   options: PluginOptions,
 ): Plugin {
   return {
@@ -51,7 +52,7 @@ export default function pluginLLMsTxt(
 
       const llmsTxt = generateLLMsTxt(routesMetadata, options);
       writeLLMsTxtFile(llmsTxt, outDir);
-
+      
       if (options.fullLLMsTxt) {
         const llmsFullTxt = generateFullLLMsTxt(routesMetadata, options);
         writeLLMsFullTxtFile(llmsFullTxt, outDir);
