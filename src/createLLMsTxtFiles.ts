@@ -49,7 +49,6 @@ export function generateFullLLMsTxt(routes: RouteMetadata[], options: PluginOpti
     
     // Group routes by section_name
     const mergedContent = createFullSectionContent(routes);
-    console.log(mergedContent);
     
     return llmsTxt + mergedContent;
 }
