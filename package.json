@@ -1,6 +1,6 @@
 {
   "name": "docusaurus-plugin-llms-txt",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Docusaurus plugin for creating llms.txt and llms-full.txt files",
   "main": "lib/index.js",
   "scripts": {
