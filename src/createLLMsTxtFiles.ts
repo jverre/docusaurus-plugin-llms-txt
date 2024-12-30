@@ -35,7 +35,7 @@ function createSectionContent(routes: RouteMetadata[]): string {
 }
 
 function createFullSectionContent(routes: RouteMetadata[]): string {
-    return routes.map((route) => {route.content}).join('\n\n');
+    return routes.map((route) => route.content).join('\n\n');
 }
 
 export function generateLLMsTxt(routes: RouteMetadata[], options: PluginOptions): string {
@@ -49,6 +49,7 @@ export function generateFullLLMsTxt(routes: RouteMetadata[], options: PluginOpti
     
     // Group routes by section_name
     const mergedContent = createFullSectionContent(routes);
+    console.log(mergedContent);
     
     return llmsTxt + mergedContent;
 }
